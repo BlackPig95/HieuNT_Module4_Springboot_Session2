@@ -1,6 +1,7 @@
 package com.ra.module4_springboot_session2.controller;
 
 import com.ra.module4_springboot_session2.model.Employee;
+import com.ra.module4_springboot_session2.model.dto.EmployeeRequestDto;
 import com.ra.module4_springboot_session2.service.IEmployeeSerivce;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -67,6 +68,22 @@ public class EmployeeController
         return new ResponseEntity<>(employeeSerivce.
                 findByEmpNameBetweenStartAndEndOrderBySalaryPaging
                         (empName, start, end, page - 1, itemPerPage, orderBy, direction).getContent(),
+                HttpStatus.OK);
+    }
+
+    //Cách 2
+    @GetMapping("/salaryDto")
+    public ResponseEntity<List<Employee>> findInRangeDto(@RequestBody EmployeeRequestDto employeeRequestDto)
+    {
+        return new ResponseEntity<>(employeeSerivce.
+                findByEmpNameBetweenStartAndEndOrderBySalaryPaging
+                        (employeeRequestDto.getEmpName(),
+                                employeeRequestDto.getStart(),
+                                employeeRequestDto.getEnd(),
+                                employeeRequestDto.getPage() - 1,
+                                employeeRequestDto.getItemPerPage(),
+                                employeeRequestDto.getOrderBy(),
+                                employeeRequestDto.getDirection()).getContent(),
                 HttpStatus.OK);
     }
 }

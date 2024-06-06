@@ -80,6 +80,9 @@ public class EmployeeServiceImpl implements IEmployeeSerivce
                 case "DESC":
                     sort = Sort.by(orderBy).descending();
                     break;
+                default://Tránh trường hợp có nhập orderBy nhưng lại không nhập direction sẽ khiến sort bị null
+                    sort = Sort.by(orderBy).ascending();
+                    break;
             }
             pageable = PageRequest.of(page, itemPerPage, sort);
         } else
